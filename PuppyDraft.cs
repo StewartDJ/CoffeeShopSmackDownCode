@@ -1,4 +1,4 @@
-public class EnemyController : MonoBehaviour
+public class PuppyController : MonoBehaviour
 {
     // Variables for energy and blocking
     public int energy;
@@ -21,7 +21,7 @@ public class EnemyController : MonoBehaviour
         energy = 0;
 
         // Set starting health value
-        health = 150;
+        health = 5;
     }
 
     void Update()
@@ -31,27 +31,27 @@ public class EnemyController : MonoBehaviour
             // Follow the player
             transform.position = Vector3.MoveTowards(transform.position, player.transform.position, 0.1f);
 
-            // Choose a random attack or block
-            int attack = Random.Range(0, 4);
+            // Choose a random attack
+            int attack = Random.Range(0, 3);
             if (attack == 0)
             {
                 // Punch
                 animator.SetTrigger("Punch");
-                player.TakeDamage(7);
+                player.TakeDamage(1);
             }
             else if (attack == 1)
             {
                 // Kick
                 animator.SetTrigger("Kick");
-                player.TakeDamage(10);
+                player.TakeDamage(99);
             }
-            else if (attack == 2)
+            else
             {
                 // Special attack
                 if (energy == maxEnergy)
                 {
                     animator.SetTrigger("SpecialAttack");
-                    player.TakeDamage(15);
+                    player.TakeDamage(2);
                 }
                 else
                 {
@@ -59,12 +59,6 @@ public class EnemyController : MonoBehaviour
                     animator.SetTrigger("Block");
                     player.TakeDamage(-blockDamageReduction);
                 }
-            }
-            else
-            {
-                // Block
-                animator.SetTrigger("Block");
-                player.TakeDamage(-blockDamageReduction);
             }
         }
         else

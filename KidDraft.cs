@@ -1,4 +1,4 @@
-public class EnemyController : MonoBehaviour
+public class KidController : MonoBehaviour
 {
     // Variables for energy and blocking
     public int energy;
@@ -21,7 +21,7 @@ public class EnemyController : MonoBehaviour
         energy = 0;
 
         // Set starting health value
-        health = 150;
+        health = 200;
     }
 
     void Update()
@@ -29,29 +29,29 @@ public class EnemyController : MonoBehaviour
         if (health > 0)
         {
             // Follow the player
-            transform.position = Vector3.MoveTowards(transform.position, player.transform.position, 0.1f);
+            transform.position = Vector3.MoveTowards(transform.position, player.transform.position, 0.2f);
 
-            // Choose a random attack or block
-            int attack = Random.Range(0, 4);
+            // Choose a random attack
+            int attack = Random.Range(0, 3);
             if (attack == 0)
             {
                 // Punch
                 animator.SetTrigger("Punch");
-                player.TakeDamage(7);
+                player.TakeDamage(9);
             }
             else if (attack == 1)
             {
                 // Kick
                 animator.SetTrigger("Kick");
-                player.TakeDamage(10);
+                player.TakeDamage(15);
             }
-            else if (attack == 2)
+            else
             {
                 // Special attack
                 if (energy == maxEnergy)
                 {
                     animator.SetTrigger("SpecialAttack");
-                    player.TakeDamage(15);
+                    player.TakeDamage(20);
                 }
                 else
                 {
@@ -59,12 +59,6 @@ public class EnemyController : MonoBehaviour
                     animator.SetTrigger("Block");
                     player.TakeDamage(-blockDamageReduction);
                 }
-            }
-            else
-            {
-                // Block
-                animator.SetTrigger("Block");
-                player.TakeDamage(-blockDamageReduction);
             }
         }
         else
